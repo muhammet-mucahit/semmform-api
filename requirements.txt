@@ -1,0 +1,10 @@
+Django
+djangorestframework
+djangorestframework-jwt
+cryptography
+python-jose
+requests
+psycopg2
+django-extensions
+django-cors-headers
+ipython
