@@ -1,5 +1,5 @@
 from form.models import Form, FormField
-from form.serializers import FormSerializer
+from form.serializers import FormSerializer, FormFieldSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import Http404
@@ -55,3 +55,19 @@ class FormDetail(APIView):
         form = self.get_object(pk)
         form.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class FormfieldList(APIView):
+
+    def get(self, request, pk):
+        form = Form.objects.get(pk=pk)
+        formfields = form.fields.all()
+        serializer = FormFieldSerializer(formfields, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = FormFieldSerializer(data=request.data)
+        if serializer.is_valid():
+            form = serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
