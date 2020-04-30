@@ -7,3 +7,4 @@ requests
 django-extensions
 django-cors-headers
 ipython
+gunicorn
