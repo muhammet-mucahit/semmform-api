@@ -8,3 +8,4 @@ django-extensions
 django-cors-headers
 ipython
 psycopg2
+gunicorn
