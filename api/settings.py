@@ -109,14 +109,14 @@ DATABASES = {
         'USER': os.environ.get('DATABASE_USERNAME'),
         'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
     }
-}
+} 
 
-# DATABASES = {
+#DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
 #         'NAME': os.path.join(BASE_DIR, 'semmform.db'),
 #     }
-# }
+#}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators

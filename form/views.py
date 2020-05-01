@@ -57,14 +57,15 @@ class FormDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class FormfieldList(APIView):
-
+class FormFieldDetail(APIView):
     def get(self, request, pk):
         form = Form.objects.get(pk=pk)
         formfields = form.fields.all()
         serializer = FormFieldSerializer(formfields, many=True)
         return Response(serializer.data)
 
+
+class FormFieldList(APIView):
     def post(self, request):
         serializer = FormFieldSerializer(data=request.data)
         if serializer.is_valid():
