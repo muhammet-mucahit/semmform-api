@@ -3,5 +3,6 @@
 .env
 venv
 env
+settings_local.py
 __pycache__
 *.db

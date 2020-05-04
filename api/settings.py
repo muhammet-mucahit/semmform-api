@@ -109,14 +109,7 @@ DATABASES = {
         'USER': os.environ.get('DATABASE_USERNAME'),
         'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
     }
-} 
-
-#DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'semmform.db'),
-#     }
-#}
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -172,3 +165,8 @@ JWT_AUTH = {
     'JWT_ISSUER': JWT_ISSUER,
     'JWT_AUTH_HEADER_PREFIX': 'Bearer',
 }
+
+try:
+    from api.settings_local import *
+except ImportError:
+    pass
