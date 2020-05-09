@@ -6,6 +6,7 @@ class FormSerializer(serializers.ModelSerializer):
     class Meta:
         model = Form
         fields = '__all__'
+        depth = 1
 
 
 class FormFieldSerializer(serializers.ModelSerializer):
