@@ -6,3 +6,4 @@ env
 settings_local.py
 __pycache__
 *.db
+.DS_Store
