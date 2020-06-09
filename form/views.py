@@ -71,19 +71,6 @@ class FormAnswers(APIView):
         serializer = FormSerializer(form)
         return Response(serializer.data)
 
-    # def patch(self, request, pk):
-    #     form = self.get_object(pk)
-    #     serializer = FormSerializer(form, data=request.data, partial=True)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data)
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    #
-    # def delete(self, request, pk):
-    #     form = self.get_object(pk)
-    #     form.delete()
-    #     return Response(status=status.HTTP_204_NO_CONTENT)
-
 
 class FormFieldList(APIView):
     def get_object(self, pk):
@@ -109,11 +96,16 @@ class FormFieldList(APIView):
 
 
 class FormFieldDetail(APIView):
-    def get(self, request, pk):
-        form = Form.objects.get(pk=pk)
-        formfields = form.fields.all()
-        serializer = FormFieldSerializer(formfields, many=True)
-        return Response(serializer.data)
+    # def get(self, request, form_id, field_id):
+    #     form = Form.objects.get(pk=form_id)
+    #     formfields = form.fields.all()
+    #     serializer = FormFieldSerializer(formfields, many=True)
+    #     return Response(serializer.data)
+
+    def delete(self, request, pk):
+        form_field = FormField.objects.get(pk=pk)
+        form_field.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class FormFieldBulkAdd(APIView):
@@ -138,7 +130,8 @@ class FormFieldBulkAdd(APIView):
 class FormAnswerView(APIView):
     def get_object(self, link):
         try:
-            return Form.objects.get(user=self.request.user, answer_link_id=link)
+            form = Form.objects.get(user=self.request.user, answer_link_id=link)
+            return form
         except Form.DoesNotExist:
             raise Http404
 
@@ -149,9 +142,6 @@ class FormAnswerView(APIView):
         return Response(serializer.data)
 
     def post(self, request, link):
-        # form = self.get_object(link)
-        # answers = FormAnswer.objects.filter(user=request.user,
-        #                                     question__form__id=form.id)
         data = request.data
         for key, value in data.items():
             question_id = key
@@ -161,32 +151,6 @@ class FormAnswerView(APIView):
             answer.user = request.user
             answer.save()
         return Response(status=status.HTTP_200_OK)
-        # form = self.get_object(link)
-        # # for data in request.data:
-        #     # data['user'] = request.user.id
-        # serializer = FormAnswerSerializer(data=request.data, many=True)
-        # if serializer.is_valid():
-        #     print(serializer.data)
-        #     serializer.save()
-        #     return Response(serializer.data, status=status.HTTP_201_CREATED)
-        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-# @api_view(['GET', 'POST'])
-# def form_answers(request, link):
-#     if request.method == 'POST':
-#         data = request.data
-#
-#         for key, value in data.items():
-#             question_id = key.split('_')[1]
-#             answer = FormAnswer()
-#             answer.answer = value
-#             answer.question_id = question_id
-#             answer.user = request.user
-#             answer.save()
-#         return Response(status=status.HTTP_200_OK)
-#     return Response({"forms": FormAnswer.objects.all()},
-#                     status=status.HTTP_200_OK)
 
 
 @api_view(['GET', 'POST'])

@@ -8,6 +8,7 @@ urlpatterns = [
     path('forms/<int:pk>/', FormDetail.as_view(), name="form-detail"),
     path('forms/answers/<str:link>/', FormAnswers.as_view()),
     path('forms/answers/answer/<str:link>/', FormAnswerView.as_view()),
+    path('formfields/<int:pk>', FormFieldDetail.as_view()),
     path('forms/<int:pk>/formfields/', FormFieldList.as_view()),
     path('forms/<int:pk>/formfields/bulk', FormFieldBulkAdd.as_view(), name="bulk_add"),
     path('formfields/<int:pk>', FormFieldDetail.as_view(), name="formfield"),
